@@ -7,6 +7,7 @@ from weasyprint import HTML
 from io import BytesIO
 from datetime import datetime
 from .forms import ClienteForm
+from .entidades import cliente
 
 # Create your views here.
 
@@ -18,7 +19,13 @@ def inserir_clientes(request):
     if request.method == 'POST':
         form = ClienteForm(request.POST)
         if form.is_valid():
-            form.save()
+            nome = form.cleaned_data['nome']
+            sexo = form.cleaned_data['sexo']
+            data_nascimento = form.cleaned_data['data_nascimento']
+            email = form.cleaned_data['email']
+            profissao = form.cleaned_data['profissao']
+            cliente_novo = cliente.Cliente(nome=nome, sexo=sexo, data_nascimento=data_nascimento, email=email, profissao=profissao)
+
             return redirect('listar_clientes')
     else:
         form = ClienteForm()
@@ -32,7 +39,12 @@ def editar_cliente(request, id):
     cliente = Cliente.objects.get(id=id)
     form = ClienteForm(request.POST or None, instance=cliente)
     if form.is_valid():
-        form.save()
+        nome = form.cleaned_data['nome']
+        sexo = form.cleaned_data['sexo']
+        data_nascimento = form.cleaned_data['data_nascimento']
+        email = form.cleaned_data['email']
+        profissao = form.cleaned_data['profissao']
+        cliente_novo = cliente.Cliente(nome=nome, sexo=sexo, data_nascimento=data_nascimento, email=email, profissao=profissao)
         return redirect('listar_clientes')
     return render(request, 'clientes/form_cliente.html', {'form': form})
 
