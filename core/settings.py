@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'clientes',
-    'django_adminlte',
+    'adminlte3',
 ]
 
 MIDDLEWARE = [
